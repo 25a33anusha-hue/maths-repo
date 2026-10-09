@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain, Codomain & Range — Interactive Learning Lab</title>
+<style>
+:root{--ink:#17233b;--muted:#596780;--paper:#f5f7fc;--card:#fff;--blue:#3157c8;--teal:#078878;--gold:#f3b744;--line:#dce3f1;--pink:#f9e5ee}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+header{background:linear-gradient(125deg,#182a65,#3157c8 62%,#078878);color:white;padding:36px 20px 32px}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}header h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.1;margin:10px 0}header p{max-width:740px;margin:12px 0 0;color:#e8eeff}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.78rem;font-weight:800;color:#c8d5ff}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}nav a{color:white;text-decoration:none;border:1px solid #ffffff55;border-radius:999px;padding:7px 12px;font-size:.9rem}main{padding:24px 0 50px}.section{margin:22px 0}.section h2{font-size:1.55rem;margin:0 0 12px}.section-intro{color:var(--muted);margin-top:-4px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px #1c32620a}.card h3{margin:0 0 8px;font-size:1.1rem}.definition{border-left:4px solid var(--blue)}.definition:nth-child(2){border-left-color:var(--teal)}.definition:nth-child(3){border-left-color:#d68a00}.definition p{margin:7px 0;color:var(--muted)}.math{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f0f3fb;padding:2px 6px;border-radius:6px;color:#263f93}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-weight:700;font-size:.9rem;margin-bottom:5px}.field input,.field select{width:100%;padding:11px 12px;border:1px solid #bdc8df;border-radius:10px;font:inherit;background:white;color:var(--ink)}.hint{font-size:.82rem;color:var(--muted);margin:5px 0 0}.button-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:10px;padding:10px 15px;font:inherit;font-weight:750;cursor:pointer;background:var(--blue);color:white}.btn.secondary{background:#e9eefb;color:#263f93}.btn:hover{filter:brightness(.96)}.error{color:#b42345;font-weight:700;margin-top:10px;min-height:1.5em}
+.mapping{display:grid;grid-template-columns:minmax(90px,1fr) minmax(110px,1.2fr) minmax(90px,1fr);gap:12px;align-items:stretch;margin-top:18px}.setbox{border:1px solid var(--line);border-radius:14px;background:#fbfcff;padding:12px;text-align:center;min-width:0}.setbox h4{margin:0 0 10px;font-size:.92rem}.nodes{display:flex;flex-direction:column;gap:9px;align-items:center}.node{border:2px solid #9eb0dc;border-radius:50%;width:46px;height:46px;display:grid;place-items:center;background:white;font-weight:800;position:relative;z-index:2}.node.output{border-color:#80c7b9}.node.inrange{background:#d9f5ec;border-color:var(--teal);color:#075c50}.arrows{position:relative;min-height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-align:center}.arrows svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}.arrows span{position:relative;background:var(--card);padding:5px;border-radius:7px;max-width:115px}.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.result{padding:13px;border-radius:12px;background:#f0f4ff;border:1px solid #d9e2fb}.result:nth-child(2){background:#e9f8f4;border-color:#c4e9df}.result:nth-child(3){background:#fff6df;border-color:#f2e1ac}.result b{display:block;font-size:.84rem;color:var(--muted)}.result strong{display:block;overflow-wrap:anywhere;margin-top:5px}.note{font-size:.87rem;color:var(--muted);margin:12px 0 0}.example-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.example{border:1px solid var(--line);border-radius:14px;padding:15px;background:white}.example button{margin-top:10px}.quiz-q{border-top:1px solid var(--line);padding:15px 0}.quiz-q:first-of-type{border-top:0}.quiz-q p{font-weight:700;margin:0 0 9px}.quiz-q label{display:block;padding:5px 0;color:var(--muted);cursor:pointer}.feedback{font-weight:700;margin-top:10px;min-height:1.4em}.score{font-size:1.1rem;font-weight:800;margin-top:12px}.footer{text-align:center;color:var(--muted);font-size:.85rem;padding:18px}
+@media(max-width:700px){.grid,.controls{grid-template-columns:1fr}.mapping{grid-template-columns:minmax(65px,1fr) 75px minmax(65px,1fr);gap:4px}.node{width:38px;height:38px;font-size:.9rem}.setbox{padding:8px 4px}.arrows span{font-size:.75rem;padding:3px}.results,.example-list{grid-template-columns:1fr}.card{padding:16px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">Discrete Mathematical Structures · Interactive Lab</div>
+<h1>Domain, Codomain<br>&amp; Range</h1>
+<p>Explore how a function maps each input to exactly one output. Change the sets and rule, inspect the mapping diagram, then check your understanding with a short quiz.</p>
+<nav><a href="#concepts">Key concepts</a><a href="#explorer">Function explorer</a><a href="#examples">Examples</a><a href="#practice">Practice quiz</a></nav>
+</div></header>
+<main class="wrap">
+<section id="concepts" class="section">
+<h2>1. Learn the concepts</h2>
+<p class="section-intro">For a function <span class="math">f : A → B</span>, set A is the input set and set B is the declared output set.</p>
+<div class="grid">
+<article class="card definition"><h3>Domain</h3><p>The <b>domain</b> is the set of all permitted input values for a function.</p><p>In <span class="math">f : A → B</span>, the domain is <span class="math">A</span>.</p></article>
+<article class="card definition"><h3>Codomain</h3><p>The <b>codomain</b> is the set of possible outputs declared for the function. Some codomain elements may never be reached.</p><p>In <span class="math">f : A → B</span>, the codomain is <span class="math">B</span>.</p></article>
+<article class="card definition"><h3>Range (image)</h3><p>The <b>range</b> is the set of output values that the function actually produces from the domain.</p><p>The range is always a subset of the codomain.</p></article>
+<article class="card"><h3>Function rule</h3><p>A relation is a function when every element of the domain is assigned <b>exactly one</b> output in the codomain.</p><p><span class="math">Range(f) ⊆ Codomain(f)</span></p><p class="note">Different inputs are allowed to map to the same output.</p></article>
+</div>
+</section>
+<section id="explorer" class="section">
+<h2>2. Function explorer</h2>
+<p class="section-intro">Enter finite sets using commas. Choose a rule and the tool will calculate each output, draw the mapping, and list the range. Only inputs whose outputs belong to the codomain form a valid function into that codomain.</p>
+<div class="card">
+<div class="controls">
+<div class="field"><label for="domain">Domain A (inputs)</label><input id="domain" value="1, 2, 3, 4" autocomplete="off"><p class="hint">Example: 1, 2, 3, 4</p></div>
+<div class="field"><label for="codomain">Codomain B (allowed outputs)</label><input id="codomain" value="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16" autocomplete="off"><p class="hint">Include every output produced by the rule.</p></div>
+<div class="field"><label for="rule">Function rule</label><select id="rule"><option value="square">f(x) = x² (square)</option><option value="double">f(x) = 2x (double)</option><option value="plus">f(x) = x + 2</option><option value="identity">f(x) = x (identity)</option><option value="negative">f(x) = −x</option><option value="custom">f(x) = ax + b (custom linear)</option></select></div>
+<div class="field" id="customFields" hidden><label for="a">Custom values: a and b</label><div style="display:flex;gap:8px"><input id="a" type="number" value="2" aria-label="a coefficient"><input id="b" type="number" value="1" aria-label="b constant"></div><p class="hint">Rule becomes f(x) = ax + b.</p></div>
+</div>
+<div class="button-row"><button class="btn" id="calculate">Update mapping</button><button class="btn secondary" id="reset">Reset example</button></div>
+<div id="error" class="error" role="status" aria-live="polite"></div>
+<div class="mapping" id="mapping" aria-label="Function mapping diagram">
+<div class="setbox"><h4>Domain A</h4><div class="nodes" id="inputs"></div></div>
+<div class="arrows"><svg id="arrows" aria-hidden="true"></svg><span id="ruleLabel">f(x) = x²</span></div>
+<div class="setbox"><h4>Codomain B</h4><div class="nodes" id="outputs"></div></div>
+</div>
+<div class="results">
+<div class="result"><b>DOMAIN</b><strong id="domainResult">{1, 2, 3, 4}</strong></div>
+<div class="result"><b>CODOMAIN</b><strong id="codomainResult">{…}</strong></div>
+<div class="result"><b>ACTUAL RANGE</b><strong id="rangeResult">{1, 4, 9, 16}</strong></div>
+</div>
+<p class="note" id="explanation">Green output nodes are elements of the range. Other codomain elements are allowed outputs that are not reached by this function.</p>
+</div>
+</section>
+<section id="examples" class="section">
+<h2>3. Worked examples</h2>
+<div class="example-list">
+<div class="example"><h3>Example A · Squaring</h3><p>Let A = {1, 2, 3}, B = {1, 2, 4, 9}. If f(x) = x², then the outputs are 1, 4, 9.</p><p><b>Domain:</b> {1, 2, 3}<br><b>Codomain:</b> {1, 2, 4, 9}<br><b>Range:</b> {1, 4, 9}</p><button class="btn secondary load-example" data-a="1,2,3" data-b="1,2,4,9" data-rule="square">Try this example</button></div>
+<div class="example"><h3>Example B · Doubling</h3><p>Let A = {0, 1, 2, 3}, B = {0, 2, 4, 6, 8}. If f(x) = 2x, every domain value maps to an even number.</p><p><b>Domain:</b> {0, 1, 2, 3}<br><b>Codomain:</b> {0, 2, 4, 6, 8}<br><b>Range:</b> {0, 2, 4, 6}</p><button class="btn secondary load-example" data-a="0,1,2,3" data-b="0,2,4,6,8" data-rule="double">Try this example</button></div>
+<div class="example"><h3>Example C · Same range, different codomain</h3><p>Let A = {1, 2, 3}, f(x) = x + 1. If B = {2, 3, 4, 5, 6}, the range is still {2, 3, 4}; 5 and 6 are not reached.</p><p><b>Key idea:</b> The codomain is specified; the range is calculated.</p><button class="btn secondary load-example" data-a="1,2,3" data-b="2,3,4,5,6" data-rule="plus">Try this example</button></div>
+</div>
+</section>
+<section id="practice" class="section">
+<h2>4. Check your understanding</h2>
+<p class="section-intro">Choose one answer for each question, then select “Check answers”.</p>
+<div class="card" id="quiz">
+<div class="quiz-q" data-answer="b"><p>1. If f : A → B, which set is the domain?</p><label><input type="radio" name="q1" value="a"> B</label><label><input type="radio" name="q1" value="b"> A</label><label><input type="radio" name="q1" value="c"> The range only</label><div class="feedback"></div></div>
+<div class="quiz-q" data-answer="c"><p>2. For A = {1, 2, 3}, B = {1, 2, 4, 9} and f(x) = x², what is the range?</p><label><input type="radio" name="q2" value="a"> {1, 2, 4, 9}</label><label><input type="radio" name="q2" value="b"> {1, 2, 3}</label><label><input type="radio" name="q2" value="c"> {1, 4, 9}</label><div class="feedback"></div></div>
+<div class="quiz-q" data-answer="a"><p>3. Which statement is always true for a function f : A → B?</p><label><input type="radio" name="q3" value="a"> Range(f) is a subset of B.</label><label><input type="radio" name="q3" value="b"> Range(f) must equal B.</label><label><input type="radio" name="q3" value="c"> Every codomain element must be used.</label><div class="feedback"></div></div>
+<div class="quiz-q" data-answer="b"><p>4. A relation is a function when each domain element has…</p><label><input type="radio" name="q4" value="a"> At least two outputs</label><label><input type="radio" name="q4" value="b"> Exactly one output</label><label><input type="radio" name="q4" value="c"> No output</label><div class="feedback"></div></div>
+<button class="btn" id="checkQuiz">Check answers</button> <button class="btn secondary" id="clearQuiz">Try again</button>
+<div class="score" id="score" aria-live="polite"></div>
+</div>
+</section>
+<section class="section">
+<h2>5. Exercise ideas for your assignment book</h2>
+<div class="card">
+<ol>
+<li>Let A = {1, 2, 3, 4} and B = {1, 4, 9, 16, 25}. For f(x) = x², write the domain, codomain, and range.</li>
+<li>Let A = {−2, −1, 0, 1, 2} and f(x) = 2x. Choose a suitable codomain and find the range.</li>
+<li>Give an example where the range is a proper subset of the codomain. Explain why.</li>
+<li>Can two different domain elements map to the same output and still be a function? Give an example.</li>
+<li>Explain the difference between codomain and range in your own words.</li>
+</ol>
+<p class="note"><b>Study reminder:</b> Use the definitions, notation, examples, and exercise style in your prescribed D. S. C. textbook. This webpage is a study aid; write your assignment in your own words and verify it against your textbook.</p>
+</div>
+</section>
+</main>
+<div class="footer">Domain, Codomain &amp; Range · Interactive study tool</div>
+<script>
+const $ = id => document.getElementById(id);
+const defaults = {a:"1, 2, 3, 4", b:"1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16", rule:"square"};
+function parseSet(s){const parts=s.split(",").map(x=>x.trim()).filter(Boolean);if(!parts.length)throw Error("Please enter at least one value in each set.");const vals=parts.map(x=>{if(x===""||!Number.isFinite(Number(x)))throw Error("Use numbers separated by commas in both sets.");return Number(x)});if(new Set(vals).size!==vals.length)throw Error("Each set should contain distinct values; remove duplicates.");if(vals.length>12)throw Error("For a clear mapping diagram, use at most 12 values per set.");return vals}
+function fmt(n){return Number.isInteger(n)?String(n):String(Number(n.toFixed(4)))}
+function setFmt(a){return "{"+a.map(fmt).join(", ")+"}"}
+function f(x){switch($("rule").value){case"square":return x*x;case"double":return 2*x;case"plus":return x+2;case"identity":return x;case"negative":return -x;case"custom":return Number($("a").value)*x+Number($("b").value);default:return x*x}}
+function ruleText(){switch($("rule").value){case"square":return"f(x) = x²";case"double":return"f(x) = 2x";case"plus":return"f(x) = x + 2";case"identity":return"f(x) = x";case"negative":return"f(x) = −x";case"custom":return"f(x) = "+fmt(Number($("a").value))+"x + "+fmt(Number($("b").value));}}
+function draw(domain,codomain,outputs){
+ const inputs=$("inputs"),outs=$("outputs"),svg=$("arrows");inputs.innerHTML="";outs.innerHTML="";svg.innerHTML="";
+ domain.forEach((x,i)=>{const n=document.createElement("div");n.className="node";n.textContent=fmt(x);n.dataset.index=i;inputs.appendChild(n)});
+ codomain.forEach(y=>{const n=document.createElement("div");n.className="node output"+(outputs.includes(y)?" inrange":"");n.textContent=fmt(y);n.dataset.value=fmt(y);outs.appendChild(n)});
+ // SVG arrows are drawn after layout so their endpoints match the displayed nodes.
+ requestAnimationFrame(()=>{const map=$("mapping").getBoundingClientRect(),a=inputs.getBoundingClientRect(),b=outs.getBoundingClientRect();svg.setAttribute("viewBox",`0 0 ${Math.max(1,map.width)} ${Math.max(1,map.height)}`);svg.setAttribute("preserveAspectRatio","none");
+ domain.forEach((x,i)=>{const y=outputs[i];const outNodes=[...outs.children];const j=codomain.findIndex(v=>v===y);if(j<0)return;const inNode=inputs.children[i].getBoundingClientRect(),outNode=outNodes[j].getBoundingClientRect();const x1=inNode.right-map.left,y1=inNode.top+inNode.height/2-map.top,x2=outNode.left-map.left,y2=outNode.top+outNode.height/2-map.top;const ns="http://www.w3.org/2000/svg";const line=document.createElementNS(ns,"path");line.setAttribute("d",`M ${x1} ${y1} C ${x1+25} ${y1}, ${x2-25} ${y2}, ${x2} ${y2}`);line.setAttribute("fill","none");line.setAttribute("stroke","#7b8fca");line.setAttribute("stroke-width","1.8");line.setAttribute("opacity",".8");line.setAttribute("marker-end","url(#arrowhead)");svg.appendChild(line)});
+ const defs=document.createElementNS("http://www.w3.org/2000/svg","defs"),marker=document.createElementNS("http://www.w3.org/2000/svg","marker");marker.setAttribute("id","arrowhead");marker.setAttribute("markerWidth","7");marker.setAttribute("markerHeight","7");marker.setAttribute("refX","5");marker.setAttribute("refY","3");marker.setAttribute("orient","auto");const path=document.createElementNS("http://www.w3.org/2000/svg","path");path.setAttribute("d","M0,0 L6,3 L0,6 Z");path.setAttribute("fill","#7b8fca");marker.appendChild(path);defs.appendChild(marker);svg.appendChild(defs);
+ });
+}
+function update(){try{const domain=parseSet($("domain").value),codomain=parseSet($("codomain").value);const outputs=domain.map(f);if(outputs.some(v=>!Number.isFinite(v)))throw Error("The rule produced an invalid number.");const missing=outputs.filter(v=>!codomain.includes(v));$("error").textContent="";$("ruleLabel").textContent=ruleText();$("domainResult").textContent=setFmt(domain);$("codomainResult").textContent=setFmt(codomain);$("rangeResult").textContent=setFmt([...new Set(outputs)].sort((a,b)=>a-b));draw(domain,codomain,outputs);if(missing.length){$("error").textContent="Not a function into this codomain: output(s) "+setFmt([...new Set(missing)])+" are missing from B. Add them to the codomain or change the rule."; $("explanation").textContent="The rule assigns each input an output, but the output set B does not contain every result. Update the codomain to make this a function A → B."}else{$("explanation").textContent="Green output nodes are elements of the range. Other codomain elements are allowed outputs that are not reached by this function."}}catch(e){$("error").textContent=e.message;$("inputs").innerHTML="";$("outputs").innerHTML="";$("arrows").innerHTML=""}}
+$("rule").addEventListener("change",()=>{$("customFields").hidden=$("rule").value!=="custom";update()});$("calculate").addEventListener("click",update);
+$("reset").addEventListener("click",()=>{$("domain").value=defaults.a;$("codomain").value=defaults.b;$("rule").value=defaults.rule;$("customFields").hidden=true;update()});
+document.querySelectorAll(".load-example").forEach(btn=>btn.addEventListener("click",()=>{$("domain").value=btn.dataset.a;$("codomain").value=btn.dataset.b;$("rule").value=btn.dataset.rule;$("customFields").hidden=true;update();location.hash="explorer"}));
+$("checkQuiz").addEventListener("click",()=>{let score=0;document.querySelectorAll(".quiz-q").forEach(q=>{const chosen=q.querySelector("input:checked"),fb=q.querySelector(".feedback");if(chosen&&chosen.value===q.dataset.answer){score++;fb.textContent="Correct!";fb.style.color="#087b61"}else{fb.textContent="Not quite — review the concepts above and try again.";fb.style.color="#b42345"}});$("score").textContent=`You scored ${score} out of 4.`});
+$("clearQuiz").addEventListener("click",()=>{document.querySelectorAll("#quiz input").forEach(i=>i.checked=false);document.querySelectorAll(".feedback").forEach(f=>f.textContent="");$("score").textContent=""});
+window.addEventListener("resize",update);update();
+</script>
+</body>
+</html>
